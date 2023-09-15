@@ -19,4 +19,6 @@ Route::prefix('v1')->group(function () {
     Route::resource('/despesas', DespesasController::class)->only([
         'index', 'show', 'store', 'update', 'destroy'
     ]);
+
+    Route::get('/receitas', [ReceitasController::class, 'findForDespesas']);
 });

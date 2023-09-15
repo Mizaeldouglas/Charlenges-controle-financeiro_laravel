@@ -11,6 +11,9 @@ use Illuminate\Validation\Rule;
 
 class DespesasController extends Controller
 {
+
+
+
     public function index()
     {
         $despesas = Despesas::all();

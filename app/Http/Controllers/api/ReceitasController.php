@@ -8,6 +8,18 @@ use Illuminate\Http\Request;
 
 class ReceitasController extends Controller
 {
+
+    public function findForDespesas()
+    {
+        $search = request('descricao');
+        $findReceitas = Receitas::where('descricao', 'like', "%$search%")->get();
+
+        if ($findReceitas->isEmpty()) {
+            return response()->json(["Error" => 'Nenhuma Receita encontrada'], 404);
+        }
+        return response()->json($findReceitas, 200);
+    }
+
     public function index()
     {
         $receitas = Receitas::all();
