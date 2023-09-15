@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class ReceitasController extends Controller
 {
 
-    public function findForDespesas()
+    public function findForReceitas()
     {
         $search = request('descricao');
         $findReceitas = Receitas::where('descricao', 'like', "%$search%")->get();

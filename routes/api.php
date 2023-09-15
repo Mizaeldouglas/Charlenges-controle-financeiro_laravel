@@ -20,5 +20,6 @@ Route::prefix('v1')->group(function () {
         'index', 'show', 'store', 'update', 'destroy'
     ]);
 
-    Route::get('/receitas', [ReceitasController::class, 'findForDespesas']);
+    Route::get('/receitas', [ReceitasController::class, 'findForReceitas']);
+    Route::get('/despesas', [DespesasController::class, 'findForDespesas']);
 });

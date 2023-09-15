@@ -12,7 +12,16 @@ use Illuminate\Validation\Rule;
 class DespesasController extends Controller
 {
 
+    public function findForDespesas()
+    {
+        $search = request('descricao');
+        $findDespesas = Despesas::where('descricao', 'like', "%$search%")->get();
 
+        if ($findDespesas->isEmpty()) {
+            return response()->json(["Error" => 'Nenhuma Despesas encontrada'], 404);
+        }
+        return response()->json($findDespesas, 200);
+    }
 
     public function index()
     {
