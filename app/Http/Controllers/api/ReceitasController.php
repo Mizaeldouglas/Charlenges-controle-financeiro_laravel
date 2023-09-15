@@ -36,6 +36,13 @@ class ReceitasController extends Controller
 
     public function show(string $id)
     {
+        $receita = Receitas::find($id);
+
+        if (is_null($receita)) {
+            return response()->json(['error' => 'Receita não encontrada'], 404);
+        }
+
+        return response()->json($receita, 200);
     }
 
     public function edit(string $id)
@@ -44,9 +51,23 @@ class ReceitasController extends Controller
 
     public function update(Request $request, string $id)
     {
+        $receita = Receitas::find($id);
+        if (is_null($receita)) {
+            return response()->json($receita, 404);
+        }
+        $receita->update($request->all());
+        return response()->json(['Alterado com sucesso!' => $receita], 200);
     }
 
     public function destroy(string $id)
     {
+        $receita = Receitas::find($id);
+
+        if (is_null($receita)) {
+            return response()->json(['error' => 'receita não não encontrada'], 404);
+        }
+
+        $receita->delete();
+        return response()->json("Deletado com sucesso!", 200);
     }
 }
