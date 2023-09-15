@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Http\Controllers\Controller;
 use App\Models\Despesas;
+use App\Enums\CategoriaEnum;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class DespesasController extends Controller
 {
@@ -15,19 +18,42 @@ class DespesasController extends Controller
         return response()->json($despesas, 200);
     }
 
+
     public function create()
     {
     }
 
+
+
     public function store(Request $request)
     {
-        $validate = $request->validate([
+        $data = $request->all();
+
+        if (empty($data['categoria'])) {
+            $data['categoria'] = CategoriaEnum::OUTRAS;
+        }
+
+
+        $messages = [
+            'categoria.in' => 'A categoria deve ser uma das seguintes: ' . implode(', ', CategoriaEnum::values()),
+        ];
+
+        $validator = Validator::make($data, [
             'descricao' => 'required',
             'valor' => 'required',
-            'data' => 'required|date'
-        ]);
+            'data' => 'required|date',
+            'categoria' => [
+                'required',
+                Rule::in(CategoriaEnum::values())
 
-        $newDespesas = Despesas::create($validate);
+            ]
+        ], $messages);
+
+        if ($validator->fails()) {
+            return response()->json(["Error" => $validator->errors()], 400);
+        }
+
+        $newDespesas = Despesas::create($data);
 
         if (is_null($newDespesas)) {
             return response()->json(["Error" => 'não foi possivel criar uma nova despesa'], 404);

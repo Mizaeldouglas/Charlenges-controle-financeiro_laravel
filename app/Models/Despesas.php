@@ -12,6 +12,7 @@ class Despesas extends Model
     protected $fillable = [
         'descricao',
         'valor',
-        'data'
+        'data',
+        'categoria'
     ];
 }
