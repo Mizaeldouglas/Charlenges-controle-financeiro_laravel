@@ -12,6 +12,23 @@ use Illuminate\Validation\Rule;
 class DespesasController extends Controller
 {
 
+
+    public function listarPorMes($ano, $mes)
+    {
+        if (!is_numeric($ano) || !is_numeric($mes)) {
+            return response()->json(["Error" => 'Ano e mês são obrigatórios e devem ser valores numéricos'], 400);
+        }
+
+        $despesas = Despesas::whereYear('data', $ano)
+            ->whereMonth('data', $mes)
+            ->get();
+        if ($despesas->isEmpty()) {
+            return response()->json(["Error" => 'Nenhuma Despesas encontrada'], 404);
+        }
+
+        return response()->json($despesas, 200);
+    }
+
     public function findForDespesas()
     {
         $search = request('descricao');
@@ -29,13 +46,6 @@ class DespesasController extends Controller
 
         return response()->json($despesas, 200);
     }
-
-
-    public function create()
-    {
-    }
-
-
 
     public function store(Request $request)
     {
@@ -83,10 +93,6 @@ class DespesasController extends Controller
         }
 
         return response()->json($despesa, 200);
-    }
-
-    public function edit(string $id)
-    {
     }
 
     public function update(Request $request, string $id)

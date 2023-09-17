@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('despesas', function (Blueprint $table) {
             $table->id();
             $table->string('descricao');
-            $table->double('valor');
+            $table->decimal('valor', 10, 2);
             $table->date('data');
             $table->timestamps();
         });

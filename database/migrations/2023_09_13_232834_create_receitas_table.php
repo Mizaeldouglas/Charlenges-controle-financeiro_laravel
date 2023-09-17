@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('receitas', function (Blueprint $table) {
             $table->id();
             $table->string('descricao');
-            $table->string('valor');
+            $table->decimal('valor', 10, 2);
             $table->date('data');
             $table->timestamps();
         });

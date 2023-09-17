@@ -8,6 +8,21 @@ use Illuminate\Http\Request;
 
 class ReceitasController extends Controller
 {
+    public function listarPorMes($ano, $mes)
+    {
+        if (!is_numeric($ano) || !is_numeric($mes)) {
+            return response()->json(["Error" => 'Ano e mês são obrigatórios e devem ser valores numéricos'], 400);
+        }
+
+        $receitas = Receitas::whereYear('data', $ano)
+            ->whereMonth('data', $mes)
+            ->get();
+        if ($receitas->isEmpty()) {
+            return response()->json(["Error" => 'Nenhuma Receita encontrada'], 404);
+        }
+
+        return response()->json($receitas, 200);
+    }
 
     public function findForReceitas()
     {
