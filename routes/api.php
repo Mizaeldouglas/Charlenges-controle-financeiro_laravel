@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\DespesasController;
 use App\Http\Controllers\api\ReceitasController;
+use App\Http\Controllers\api\ResumeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,7 +17,11 @@ Route::prefix('v1')->group(function () {
     /*****************************  /RECEITAS  *****************************/
 
     Route::resource('/receitas', ReceitasController::class)->only([
-        'index', 'show', 'store', 'update', 'destroy'
+        'index',
+        'show',
+        'store',
+        'update',
+        'destroy'
     ]);
     Route::get('/receitas', [ReceitasController::class, 'findForReceitas']);
     Route::get('/receitas/{ano}/{mes}', [ReceitasController::class, 'listarPorMes']);
@@ -26,8 +31,17 @@ Route::prefix('v1')->group(function () {
     /*****************************  /RECEITAS  *****************************/
 
     Route::resource('/despesas', DespesasController::class)->only([
-        'index', 'show', 'store', 'update', 'destroy'
+        'index',
+        'show',
+        'store',
+        'update',
+        'destroy'
     ]);
     Route::get('/despesas', [DespesasController::class, 'findForDespesas']);
     Route::get('/despesas/{ano}/{mes}', [DespesasController::class, 'listarPorMes']);
+    Route::get('/resumo', [DespesasController::class, 'resumoPorMes']);
+
+    /*****************************  /RESUMO  *****************************/
+
+    Route::get('/resumo/{ano}/{mes}', [ResumeController::class, 'resumoPorMes']);
 });
