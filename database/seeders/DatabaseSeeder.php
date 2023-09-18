@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use Database\Factories\ReceitasFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\App;
+use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,11 +17,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // \App\Models\User::factory(10)->create();
-        \App\Models\Receitas::factory(10)->create();
+        // \App\Models\Receitas::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        User::factory()->create([
+            'name' => 'teste',
+            'email' => 'test@email.com',
+        ]);
     }
 }

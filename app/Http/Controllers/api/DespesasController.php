@@ -11,9 +11,6 @@ use Illuminate\Validation\Rule;
 
 class DespesasController extends Controller
 {
-
-
-
     public function listarPorMes($ano, $mes)
     {
         if (!is_numeric($ano) || !is_numeric($mes)) {
